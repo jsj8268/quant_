@@ -19,7 +19,19 @@ class Stock:
         self.month_3=self.before_3_month.strftime('%Y-%m-%d')
         self.month_6=self.before_6_month.strftime('%Y-%m-%d')
         self.month_12=self.before_1_year.strftime('%Y-%m-%d')
-               
+    def get_rate_of_return(self, month):
+        before_month =  self.now - relativedelta(days=month)
+        month_format = before_month.strftime('%Y-%m-%d')
+        today_close = self.get_current_stock_price()
+        month_df= None
+        if month == 12:
+             month_df=self.fdr.truncate(after=month_format)
+        else:
+             month_df=self.fdr.truncate(after=month_format)
+        close_price = month_df.tail(1).iloc[0].Close
+        
+        rate = today_close / close_price - 1
+        return rate
     def get_momentum_score(self):
         month_1_df=self.fdr.truncate(after=self.month_1)
         month_3_df=self.fdr.truncate(after=self.month_3)
@@ -37,7 +49,7 @@ class Stock:
         rate_6= today_close / close_6 -1
         rate_12= today_close / close_12 -1
         #=(H9*12)+(J9*4)+(M9*2)+(S9*1)
-        self.momentum_score = rate_1 * 12 + rate_3 *4 + rate_6 * 2 + rate_12
+        self.momentum_score = rate_1 * 12 + rate_3 * 4 + rate_6 * 2 + rate_12
         return self.momentum_score
     def get_current_stock_price(self):
         return self.fdr.tail(1).iloc[0].Close
