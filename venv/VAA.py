@@ -79,8 +79,9 @@ class VAA:
             record.append(v.name )  
             data.append(record)         
         self.df = pd.DataFrame(data,columns=column_names)
-        print(tabulate(self.df,headers='keys',tablefmt='html',showindex=True , stralign='left',numalign='right'))
+        print(tabulate(self.df,headers='keys',tablefmt='table',showindex=True , stralign='left',numalign='right'))
 stocks = {143850:'KODEX 미국 S&P500선물(H)',251350:'KODEX 선진국MSCI World',195980:'ARIRANG 신흥국MSCI(합성h)',273130:'종합채권',332620:'ARIRANG 미국장기우량회사채',305080:'TIGER 미국채 10년 선물',329750:'TIGER 미국달러단기채권엑티브'}
+#stocks = {'SPY':'KODEX 미국 S&P500선물(H)','VEA':'KODEX 선진국MSCI World','EEM':'ARIRANG 신흥국MSCI(합성h)','AGG':'종합채권','LQD':'ARIRANG 미국장기우량회사채','SHY':'TIGER 미국채 10년 선물','IEF':'TIGER 미국달러단기채권엑티브'}
 vaa = VAA()
 for k ,v in stocks.items():
     now = datetime.now()
